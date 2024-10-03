@@ -5,7 +5,7 @@ For the final project, Run!, I'm excited to see how everything I’ve learned so
 
 Key aspects of the Run! project:
 
-**Dynamic Obstacle Generation**: I’ll be generating obstacles dynamically as the game progresses, which involves managing object pools efficiently to ensure performance doesn’t degrade as the game speeds up.
+<span style="color: red;">**Dynamic Obstacle Generation**</span>: I’ll be generating obstacles dynamically as the game progresses, which involves managing object pools efficiently to ensure performance doesn’t degrade as the game speeds up.
 **Speed and Difficulty Scaling**: One of the core mechanics in this project is the gradual increase in difficulty, with obstacles appearing more frequently and moving faster. This introduces the concept of balancing game difficulty, which is crucial in designing engaging and challenging games.
 **Collision Detection and Player Movement**: The player must navigate through gaps in the obstacles, so precise collision detection will be vital. I’ll also refine the player movement system to ensure it feels responsive and fluid, key to any runner game’s gameplay experience.
 **Scorekeeping and High Scores**: Implementing a scoring system based on how long the player survives will help solidify my understanding of game state management and displaying dynamic information on the screen.
