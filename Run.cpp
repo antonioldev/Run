@@ -1,20 +1,39 @@
 // Run.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
+#include "SFML/Graphics.hpp"
+#include <vector>
+#include "GameObject.hpp"
+#include "Factory.hpp"
+#include "InputDispatcher.hpp"
 
-#include <iostream>
+using namespace std;
+using namespace sf;
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	RenderWindow window(VideoMode::getDesktopMode(), "Run", Style::Fullscreen);
+	VertexArray canvas(Quads, 0);
+	InputDispatcher inputDispatcher(&window); //Dispatch event to any objects
+	vector <GameObject> gameObjects; //Vector that contains all objects for the game
+	Factory factory(&window); //Class used to construct all the objects
+	factory.loadLevel(gameObjects, canvas, inputDispatcher);
+
+	Clock clock;
+
+	const Color BACKGROUND_COLOR(100, 100, 100, 255);
+
+	while (window.isOpen())
+	{
+		float time = clock.restart().asSeconds();
+		inputDispatcher.dispatchInputEvents();
+		window.clear(BACKGROUND_COLOR);
+
+		//update game objects
+		for (auto& gameObject : gameObjects)
+			gameObject.update(time);
+		for (auto& gameObject : gameObjects)
+			gameObject.draw(canvas);
+		window.display();
+	}
+	return 0;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
