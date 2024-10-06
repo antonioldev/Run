@@ -133,6 +133,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CameraGraphics.cpp" />
+    <ClCompile Include="CameraUpdate.cpp" />
     <ClCompile Include="Factory.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputDispatcher.cpp" />
@@ -144,6 +146,8 @@
     <ClCompile Include="SounddEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CameraGraphics.hpp" />
+    <ClInclude Include="CameraUpdate.hpp" />
     <ClInclude Include="Component.hpp" />
     <ClInclude Include="Factory.hpp" />
     <ClInclude Include="GameObject.hpp" />
@@ -151,6 +155,7 @@
     <ClInclude Include="InputDispatcher.hpp" />
     <ClInclude Include="InputReceiver.hpp" />
     <ClInclude Include="LevelUpdate.hpp" />
+    <ClInclude Include="PlatformUpdate.hpp" />
     <ClInclude Include="PlayerGraphics.hpp" />
     <ClInclude Include="PlayerUpdate.hpp" />
     <ClInclude Include="SounddEngine.hpp" />

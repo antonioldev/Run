@@ -4,6 +4,10 @@
 SoundEngine* SoundEngine::_Instance = nullptr;
 bool SoundEngine::musicIsPlaying = false;
 Music SoundEngine::music;
+SoundBuffer SoundEngine::_ClickBuffer;
+Sound SoundEngine::_ClickSound;
+SoundBuffer SoundEngine::_JumpBuffer;
+Sound SoundEngine::_JumpSound;
 
 SoundEngine::SoundEngine()
 {

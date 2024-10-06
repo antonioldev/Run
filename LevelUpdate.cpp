@@ -102,7 +102,7 @@ void LevelUpdate::update(float timeSinceLastUpdate)
 void LevelUpdate::assemble(shared_ptr<LevelUpdate> levelUpdate,
 	shared_ptr<PlayerUpdate> playerUpdate)
 {
-	_PlayerPosition = PlayerUpdate->getPositionPointer();
+	_PlayerPosition = playerUpdate->getPositionPointer();
 	SoundEngine::startMusic();
 }
 

@@ -12,7 +12,7 @@ class InputDispatcher;
 class Factory
 {
 	private:
-		RenderWindow* _window;
+		RenderWindow* _Window;
 		const int PLAYER_TEX_LEFT = 0;
 		const int PLAYER_TEX_TOP = 0;
 		const int PLAYER_TEX_WIDTH = 80;
