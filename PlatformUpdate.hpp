@@ -1,18 +1,22 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 #include "Update.hpp"
+#include "SFML/Graphics.hpp"
 
 using namespace sf;
 
-class PlatformUpdate : public Update
+class PlatformUpdate : 
+	public Update
 {
-	private:
-		FloatRect _Position;
-		FloatRect* _PlayerPosition = nullptr;
-		bool* _PlayerIsGrounded = nullptr;
-	public:
-		FloatRect* getPositionPointer();
-		virtual void assemble(shared_ptr<LevelUpdate> levelUpdate,
-			shared_ptr<PlayerUpdate> playerUpdate) = 0;
-		virtual void update(float timeSinceLastUpdate) = 0;
+private:
+	FloatRect m_Position;
+	FloatRect* m_PlayerPosition = nullptr;
+	bool* m_PlayerIsGrounded = nullptr;
+public:
+	FloatRect* getPositionPointer();
+
+	// From Update : Component
+	void update(float fps) override;
+	void assemble(shared_ptr<LevelUpdate> levelUpdate,
+		shared_ptr<PlayerUpdate> playerUpdate)
+		override;
 };

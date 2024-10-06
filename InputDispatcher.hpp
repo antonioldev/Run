@@ -6,11 +6,13 @@ using namespace sf;
 
 class InputDispatcher
 {
-	private:
-		RenderWindow* _Window;
-		vector <InputReceiver*> _InputReceivers;
-	public:
-		InputDispatcher(RenderWindow* window);
-		void dispatchInputEvents();
-		void registerNewInputReceiver(InputReceiver* ir);
+private:
+    RenderWindow* m_Window;
+    vector <InputReceiver*> m_InputReceivers;
+
+public:
+    InputDispatcher(RenderWindow* window);
+    void dispatchInputEvents();
+
+    void registerNewInputReceiver(InputReceiver* ir);
 };

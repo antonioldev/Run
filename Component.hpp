@@ -5,7 +5,7 @@ using namespace std;
 
 class Component
 {
-	public:
-		bool _IsGraphics = false;
-		bool _IsUpdate = false;
+public:
+	bool m_IsGraphics = false;
+	bool m_IsUpdate = false;
 };

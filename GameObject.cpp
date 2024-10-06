@@ -1,30 +1,38 @@
 #include "GameObject.hpp"
+#include "SFML/Graphics.hpp"
+#include <iostream>
 #include "Update.hpp"
 #include "Graphics.hpp"
-#include <iostream>
 
-using namespace sf;
 using namespace std;
+using namespace sf;
 
-void GameObject::addComponents(shared_ptr<Component> new_component)
+void GameObject::addComponent(
+	shared_ptr<Component> newComponent)
 {
-	_Components.push_back(new_component);
+	m_Components.push_back(newComponent);
 }
 
 void GameObject::update(float elapsedTime)
 {
-	for (auto component : _Components)
+	for (auto component : m_Components)
 	{
-		if (component->_IsUpdate)
-			static_pointer_cast<Update>(component)->update(elapsedTime);
+		if (component->m_IsUpdate)
+		{
+			static_pointer_cast<Update>
+				(component)->update(elapsedTime);
+		}
 	}
 }
 
 void GameObject::draw(VertexArray& canvas)
 {
-	for (auto component : _Components)
+	for (auto component : m_Components)
 	{
-		if (component->_IsGraphics)
-			static_pointer_cast<Graphics>(component)->draw(canvas);
+		if (component->m_IsGraphics)
+		{
+			static_pointer_cast<Graphics>
+				(component)->draw(canvas);
+		}
 	}
 }

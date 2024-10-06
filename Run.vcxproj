@@ -18,6 +18,43 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Animator.hpp" />
+    <ClInclude Include="CameraGraphics.hpp" />
+    <ClInclude Include="CameraUpdate.hpp" />
+    <ClInclude Include="Component.hpp" />
+    <ClInclude Include="Factory.hpp" />
+    <ClInclude Include="GameObject.hpp" />
+    <ClInclude Include="Graphics.hpp" />
+    <ClInclude Include="InputDispatcher.hpp" />
+    <ClInclude Include="InputReceiver.hpp" />
+    <ClInclude Include="LevelUpdate.hpp" />
+    <ClInclude Include="PlatformGraphics.hpp" />
+    <ClInclude Include="PlatformUpdate.hpp" />
+    <ClInclude Include="PlayerGraphics.hpp" />
+    <ClInclude Include="PlayerUpdate.hpp" />
+    <ClInclude Include="SoundEngine.hpp" />
+    <ClInclude Include="Update.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Animator.cpp" />
+    <ClCompile Include="CameraGraphics.cpp" />
+    <ClCompile Include="CameraUpdate.cpp" />
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Factory.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Graphics.cpp" />
+    <ClCompile Include="InputDispatcher.cpp" />
+    <ClCompile Include="InputReceiver.cpp" />
+    <ClCompile Include="LevelUpdate.cpp" />
+    <ClCompile Include="PlatformGraphics.cpp" />
+    <ClCompile Include="PlatformUpdate.cpp" />
+    <ClCompile Include="PlayerGraphics.cpp" />
+    <ClCompile Include="PlayerUpdate.cpp" />
+    <ClCompile Include="Run.cpp" />
+    <ClCompile Include="SoundEngine.cpp" />
+    <ClCompile Include="Update.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -132,35 +169,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="CameraGraphics.cpp" />
-    <ClCompile Include="CameraUpdate.cpp" />
-    <ClCompile Include="Factory.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="InputDispatcher.cpp" />
-    <ClCompile Include="LevelUpdate.cpp" />
-    <ClCompile Include="PlayerGraphics.cpp" />
-    <ClCompile Include="PlayerUpdate.cpp" />
-    <ClCompile Include="Run.cpp" />
-    <ClCompile Include="InputReceiver.cpp" />
-    <ClCompile Include="SounddEngine.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="CameraGraphics.hpp" />
-    <ClInclude Include="CameraUpdate.hpp" />
-    <ClInclude Include="Component.hpp" />
-    <ClInclude Include="Factory.hpp" />
-    <ClInclude Include="GameObject.hpp" />
-    <ClInclude Include="Graphics.hpp" />
-    <ClInclude Include="InputDispatcher.hpp" />
-    <ClInclude Include="InputReceiver.hpp" />
-    <ClInclude Include="LevelUpdate.hpp" />
-    <ClInclude Include="PlatformUpdate.hpp" />
-    <ClInclude Include="PlayerGraphics.hpp" />
-    <ClInclude Include="PlayerUpdate.hpp" />
-    <ClInclude Include="SounddEngine.hpp" />
-    <ClInclude Include="Update.hpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

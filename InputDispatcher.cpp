@@ -2,23 +2,28 @@
 
 InputDispatcher::InputDispatcher(RenderWindow* window)
 {
-	_Window = window;
+    m_Window = window;
 }
 
 void InputDispatcher::dispatchInputEvents()
 {
-	sf::Event event;
-	while (_Window->pollEvent(event))
-	{
-		if (event.type == Event::KeyPressed
-			&& event.key.code == Keyboard::Escape)
-			_Window->close();
-	}
-	for (const auto& ir : _InputReceivers)
-		ir->addEvent(event);
+    sf::Event event;
+    while (m_Window->pollEvent(event))
+    {
+        if (event.type == Event::KeyPressed && 
+            event.key.code == Keyboard::Escape)
+        {
+            m_Window->close();
+        }
+
+        for (const auto& ir : m_InputReceivers)
+        {
+            ir->addEvent(event);
+        }
+    }
 }
 
 void InputDispatcher::registerNewInputReceiver(InputReceiver* ir)
 {
-	_InputReceivers.push_back(ir);
+    m_InputReceivers.push_back(ir);
 }
