@@ -137,6 +137,8 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputDispatcher.cpp" />
     <ClCompile Include="LevelUpdate.cpp" />
+    <ClCompile Include="PlayerGraphics.cpp" />
+    <ClCompile Include="PlayerUpdate.cpp" />
     <ClCompile Include="Run.cpp" />
     <ClCompile Include="InputReceiver.cpp" />
     <ClCompile Include="SounddEngine.cpp" />
@@ -149,6 +151,8 @@
     <ClInclude Include="InputDispatcher.hpp" />
     <ClInclude Include="InputReceiver.hpp" />
     <ClInclude Include="LevelUpdate.hpp" />
+    <ClInclude Include="PlayerGraphics.hpp" />
+    <ClInclude Include="PlayerUpdate.hpp" />
     <ClInclude Include="SounddEngine.hpp" />
     <ClInclude Include="Update.hpp" />
   </ItemGroup>
