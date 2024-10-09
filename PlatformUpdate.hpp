@@ -8,9 +8,9 @@ class PlatformUpdate :
 	public Update
 {
 private:
-	FloatRect m_Position;
-	FloatRect* m_PlayerPosition = nullptr;
-	bool* m_PlayerIsGrounded = nullptr;
+	FloatRect _Position;
+	FloatRect* _PlayerPosition = nullptr;
+	bool* _PlayerIsGrounded = nullptr;
 public:
 	FloatRect* getPositionPointer();
 

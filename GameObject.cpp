@@ -10,14 +10,14 @@ using namespace sf;
 void GameObject::addComponent(
 	shared_ptr<Component> newComponent)
 {
-	m_Components.push_back(newComponent);
+	_Components.push_back(newComponent);
 }
 
 void GameObject::update(float elapsedTime)
 {
-	for (auto component : m_Components)
+	for (auto component : _Components)
 	{
-		if (component->m_IsUpdate)
+		if (component->_IsUpdate)
 		{
 			static_pointer_cast<Update>
 				(component)->update(elapsedTime);
@@ -27,9 +27,9 @@ void GameObject::update(float elapsedTime)
 
 void GameObject::draw(VertexArray& canvas)
 {
-	for (auto component : m_Components)
+	for (auto component : _Components)
 	{
-		if (component->m_IsGraphics)
+		if (component->_IsGraphics)
 		{
 			static_pointer_cast<Graphics>
 				(component)->draw(canvas);

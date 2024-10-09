@@ -3,29 +3,29 @@
 
 FloatRect* CameraUpdate::getPositionPointer()
 {
-    return &m_Position;
+    return &_Position;
 }
 
 void CameraUpdate::assemble(
     shared_ptr<LevelUpdate> levelUpdate,
     shared_ptr<PlayerUpdate> playerUpdate)
 {
-    m_PlayerPosition =
+    _PlayerPosition =
         playerUpdate->getPositionPointer();
 }
 
 InputReceiver* CameraUpdate::getInputReceiver()
 {
-    m_InputReceiver = new InputReceiver;
-    m_ReceivesInput = true;
-    return m_InputReceiver;
+    _InputReceiver = new InputReceiver;
+    _ReceivesInput = true;
+    return _InputReceiver;
 }
 
 void CameraUpdate::handleInput()
 {
-    m_Position.width = 1.0f;
+    _Position.width = 1.0f;
 
-    for (const Event& event : m_InputReceiver->getEvents())
+    for (const Event& event : _InputReceiver->getEvents())
     {
 
         // Handle mouse wheel event for zooming
@@ -35,30 +35,30 @@ void CameraUpdate::handleInput()
                 sf::Mouse::VerticalWheel)
             {
                 // Accumulate the zoom factor based on delta
-                m_Position.width *=
+                _Position.width *=
                     (event.mouseWheelScroll.delta > 0)
                     ? 0.95f : 1.05f;
             }
 
         }
 
-        m_InputReceiver->clearEvents();
+        _InputReceiver->clearEvents();
     }
 }
 
 void CameraUpdate::update(float fps)
 {
-    if (m_ReceivesInput)
+    if (_ReceivesInput)
     {
         handleInput();
 
-        m_Position.left = m_PlayerPosition->left;
-        m_Position.top = m_PlayerPosition->top;
+        _Position.left = _PlayerPosition->left;
+        _Position.top = _PlayerPosition->top;
     }
     else
     {
-        m_Position.left = m_PlayerPosition->left;
-        m_Position.top = m_PlayerPosition->top;
-        m_Position.width = 1;
+        _Position.left = _PlayerPosition->left;
+        _Position.top = _PlayerPosition->top;
+        _Position.width = 1;
     }
 }

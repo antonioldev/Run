@@ -8,10 +8,10 @@ using namespace std;
 class InputReceiver
 {
 private:
-    vector<Event> mEvents;
+	vector<Event> _Events;
 
 public:
-    void addEvent(Event event);
-    vector<Event>& getEvents();
-    void clearEvents();
+	void addEvent(Event event);
+	vector<Event>& getEvents();
+	void clearEvents();
 };

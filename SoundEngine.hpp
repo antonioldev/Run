@@ -8,15 +8,17 @@ class SoundEngine
 private:
 	static Music music;
 
-	static SoundBuffer m_ClickBuffer;
-	static Sound m_ClickSound;
+	static SoundBuffer _ClickBuffer;
+	static Sound _ClickSound;
 
-	static SoundBuffer m_JumpBuffer;
-	static Sound m_JumpSound;
+	static SoundBuffer _JumpBuffer;
+	static Sound _JumpSound;
 
+	static SoundBuffer _FireballLaunchBuffer;
+	static Sound _FireballLaunchSound;
 public:
 	SoundEngine();
-	static SoundEngine* m_s_Instance;
+	static SoundEngine* _s_Instance;
 
 	static bool mMusicIsPlaying;
 
@@ -27,4 +29,6 @@ public:
 
 	static void playClick();
 	static void playJump();
+
+	static void playFireballLaunch(Vector2f playerPosition, Vector2f soundLocation);
 };

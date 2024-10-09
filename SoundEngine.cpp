@@ -1,60 +1,88 @@
 #include "SoundEngine.hpp"
 #include <assert.h>
 
-SoundEngine* SoundEngine::m_s_Instance = nullptr;
+SoundEngine* SoundEngine::_s_Instance = nullptr;
 bool SoundEngine::mMusicIsPlaying = false;
 Music SoundEngine::music;
 
-SoundBuffer SoundEngine::m_ClickBuffer;
-Sound SoundEngine::m_ClickSound;
-SoundBuffer SoundEngine::m_JumpBuffer;
-Sound SoundEngine::m_JumpSound;
+SoundBuffer SoundEngine::_ClickBuffer;
+Sound SoundEngine::_ClickSound;
+SoundBuffer SoundEngine::_JumpBuffer;
+Sound SoundEngine::_JumpSound;
+SoundBuffer SoundEngine::_FireballLaunchBuffer;
+Sound SoundEngine::_FireballLaunchSound;
 
 SoundEngine::SoundEngine()
 {
-	assert(m_s_Instance == nullptr);
-	m_s_Instance = this;
+	assert(_s_Instance == nullptr);
+	_s_Instance = this;
 
-	m_ClickBuffer.loadFromFile("sound/click.wav");
-	m_ClickSound.setBuffer(m_ClickBuffer);
+	_ClickBuffer.loadFromFile("sound/click.wav");
+	_ClickSound.setBuffer(_ClickBuffer);
 
-	m_JumpBuffer.loadFromFile("sound/jump.wav");
-	m_JumpSound.setBuffer(m_JumpBuffer);
+	_JumpBuffer.loadFromFile("sound/jump.wav");
+	_JumpSound.setBuffer(_JumpBuffer);
+
+	Listener::setDirection(1.0f, 0.f, 1.0f);
+	Listener::setUpVector(1.0f, 1.0f, 0.0f);
+	Listener::setGlobalVolume(100.0f);
+	_FireballLaunchBuffer.loadFromFile("sound/fireballLaunch.wav");
+	_FireballLaunchSound.setBuffer(_FireballLaunchBuffer);
 }
 
 void SoundEngine::playClick()
 {
-	m_ClickSound.play();
+	_ClickSound.play();
 }
 
 void SoundEngine::playJump()
 {
-	m_JumpSound.play();
+	_JumpSound.play();
 }
 
 void SoundEngine::startMusic()
 {
 	music.openFromFile("music/music.wav");
-	m_s_Instance->music.play();
-	m_s_Instance->music.setLoop(true);
+	_s_Instance->music.play();
+	_s_Instance->music.setLoop(true);
 	mMusicIsPlaying = true;
 }
 
 void SoundEngine::pauseMusic()
 {
-	m_s_Instance->music.pause();
+	_s_Instance->music.pause();
 	mMusicIsPlaying = false;
 }
 
 void SoundEngine::resumeMusic()
 {
-	m_s_Instance->music.play();
+	_s_Instance->music.play();
 	mMusicIsPlaying = true;
 }
 
 void SoundEngine::stopMusic()
 {
-	m_s_Instance->music.stop();
+	_s_Instance->music.stop();
 
 	mMusicIsPlaying = false;
+}
+
+void SoundEngine::playFireballLaunch(Vector2f playerPosition, Vector2f soundLocation)
+{
+	_FireballLaunchSound.setRelativeToListener(true);
+	if (playerPosition.x > soundLocation.x)
+	{
+		Listener::setPosition(0.0f, 0.0f, 0.0f);
+		_FireballLaunchSound.setPosition(-100.0f, 0.0f, 0.0f);
+		_FireballLaunchSound.setMinDistance(100);
+		_FireballLaunchSound.setAttenuation(0);
+	}
+	else
+	{
+		Listener::setPosition(0.0f, 0.0f, 0.0f);
+		_FireballLaunchSound.setPosition(100.0f, 0.0f, 0.0f);
+		_FireballLaunchSound.setMinDistance(100);
+		_FireballLaunchSound.setAttenuation(0);
+	}
+	_FireballLaunchSound.play();
 }

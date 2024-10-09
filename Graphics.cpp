@@ -2,5 +2,5 @@
 
 Graphics::Graphics()
 {
-	m_IsGraphics = true;
+	_IsGraphics = true;
 }

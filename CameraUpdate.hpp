@@ -6,26 +6,26 @@
 using namespace sf;
 
 class CameraUpdate :
-    public Update
+	public Update
 {
 
 private:
-    FloatRect m_Position;
-    FloatRect* m_PlayerPosition;
+	FloatRect _Position;
+	FloatRect* _PlayerPosition;
 
-    bool m_ReceivesInput = false;
-    InputReceiver* m_InputReceiver = nullptr;
+	bool _ReceivesInput = false;
+	InputReceiver* _InputReceiver = nullptr;
 
 public:
-    FloatRect* getPositionPointer();
+	FloatRect* getPositionPointer();
 
-    void handleInput();
-    InputReceiver* getInputReceiver();
+	void handleInput();
+	InputReceiver* getInputReceiver();
 
-    //From Update : Component
-    void assemble(shared_ptr<LevelUpdate> levelUpdate,
-        shared_ptr<PlayerUpdate> playerUpdate) override;
+	//From Update : Component
+	void assemble(shared_ptr<LevelUpdate> levelUpdate,
+		shared_ptr<PlayerUpdate> playerUpdate) override;
 
-    void update(float fps) override;
+	void update(float fps) override;
 
 };

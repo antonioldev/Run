@@ -11,14 +11,21 @@
 #include "PlatformUpdate.hpp"
 #include "PlatformGraphics.hpp"
 
+#include "MenuUpdate.hpp"
+#include "MenuGraphics.hpp"
+
+#include "RainGraphics.hpp" 
+
+#include "FireballGraphics.hpp"
+#include "FireballUpdate.hpp"
 
 using namespace std;
 
 Factory::Factory(RenderWindow* window)
 {
-	m_Window = window;
-	m_Texture = new Texture();
-	if (!m_Texture->loadFromFile("graphics/texture.png"))
+	_Window = window;
+	_Texture = new Texture();
+	if (!_Texture->loadFromFile("graphics/texture.png"))
 	{
 		cout << "Texture not loaded";
 		return;
@@ -84,9 +91,56 @@ void Factory::loadLevel(
 		levelUpdate->addPlatformPosition(
 			platformUpdate->getPositionPointer());
 	}
-	// End platforms
 
+	// Fireballs
+	for (int i = 0; i < 12; i++)
+	{
+		GameObject fireball;
+		shared_ptr<FireballUpdate> fireballUpdate =
+			make_shared<FireballUpdate>(
+				levelUpdate->getIsPausedPointer());
 
+		fireballUpdate->assemble(levelUpdate, playerUpdate);
+		fireball.addComponent(fireballUpdate);
+
+		shared_ptr<FireballGraphics> fireballGraphics =
+			make_shared<FireballGraphics>();
+
+		fireballGraphics->assemble(canvas,
+			fireballUpdate,
+			IntRect(870, 0, 32, 32));
+
+		fireball.addComponent(fireballGraphics);
+		gameObjects.push_back(fireball);
+	}
+
+	//Rain
+	int rainCoveragePerObject = 25;
+	int areaToCover = 350;
+	for (int h = -areaToCover / 2;
+		h < areaToCover / 2;
+		h += rainCoveragePerObject)
+	{
+		for (int v = -areaToCover / 2;
+			v < areaToCover / 2;
+			v += rainCoveragePerObject)
+		{
+			GameObject rain;
+
+			shared_ptr<RainGraphics> rainGraphics =
+				make_shared<RainGraphics>(
+					playerUpdate->getPositionPointer(),
+					h, v, rainCoveragePerObject);
+
+			rainGraphics->assemble(
+				canvas, nullptr,
+				IntRect(RAIN_TEX_LEFT, RAIN_TEX_TOP,
+					RAIN_TEX_WIDTH, RAIN_TEX_HEIGHT));
+
+			rain.addComponent(rainGraphics);
+			gameObjects.push_back(rain);
+		}
+	}
 
 	// For both the cameras
 	const float width = float(VideoMode::getDesktopMode().width);
@@ -102,7 +156,7 @@ void Factory::loadLevel(
 
 	shared_ptr<CameraGraphics> cameraGraphics =
 		make_shared<CameraGraphics>(
-			m_Window, m_Texture,
+			_Window, _Texture,
 			Vector2f(CAM_VIEW_WIDTH, CAM_VIEW_WIDTH / ratio),
 			FloatRect(CAM_SCREEN_RATIO_LEFT, CAM_SCREEN_RATIO_TOP,
 				CAM_SCREEN_RATIO_WIDTH, CAM_SCREEN_RATIO_HEIGHT));
@@ -134,7 +188,7 @@ void Factory::loadLevel(
 
 	shared_ptr<CameraGraphics> mapCameraGraphics =
 		make_shared<CameraGraphics>(
-			m_Window, m_Texture,
+			_Window, _Texture,
 			Vector2f(MAP_CAM_VIEW_WIDTH,
 				MAP_CAM_VIEW_HEIGHT / ratio),
 
@@ -150,6 +204,19 @@ void Factory::loadLevel(
 
 	mapCamera.addComponent(mapCameraGraphics);
 	gameObjects.push_back(mapCamera);
-	// End Map Camera
 
+	//Menu
+	GameObject menu;
+	shared_ptr<MenuUpdate> menuUpdate = make_shared<MenuUpdate>(_Window);
+	menuUpdate->assemble(levelUpdate, playerUpdate);
+	inputDispatcher.registerNewInputReceiver(
+		menuUpdate->getInputReceiver());
+	menu.addComponent(menuUpdate);
+	shared_ptr<MenuGraphics> menuGraphics =
+		make_shared<MenuGraphics>();
+	menuGraphics->assemble(canvas, menuUpdate,
+		IntRect(TOP_MENU_TEX_LEFT, TOP_MENU_TEX_TOP,
+		TOP_MENU_TEX_WIDTH, TOP_MENU_TEX_HEIGHT));
+	menu.addComponent(menuGraphics);
+	gameObjects.push_back(menu);
 }

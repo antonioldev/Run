@@ -3,7 +3,7 @@
 
 FloatRect* PlatformUpdate::getPositionPointer()
 {
-    return &m_Position;
+    return &_Position;
 }
 
 void PlatformUpdate::assemble(
@@ -11,61 +11,61 @@ void PlatformUpdate::assemble(
     shared_ptr<PlayerUpdate> playerUpdate)
 {
     //mPosition = position;
-    m_PlayerPosition = playerUpdate->getPositionPointer();
-    m_PlayerIsGrounded = playerUpdate->getGroundedPointer();
+    _PlayerPosition = playerUpdate->getPositionPointer();
+    _PlayerIsGrounded = playerUpdate->getGroundedPointer();
 }
 
 void PlatformUpdate::update(float fps)
 {
 
-    if (m_Position.intersects(*m_PlayerPosition))
+    if (_Position.intersects(*_PlayerPosition))
     {
-        Vector2f playerFeet(m_PlayerPosition->left +
-            m_PlayerPosition->width / 2,
-            m_PlayerPosition->top +
-            m_PlayerPosition->height);
+        Vector2f playerFeet(_PlayerPosition->left +
+            _PlayerPosition->width / 2,
+            _PlayerPosition->top +
+            _PlayerPosition->height);
 
-        Vector2f playerRight(m_PlayerPosition->left +
-            m_PlayerPosition->width,
-            m_PlayerPosition->top +
-            m_PlayerPosition->height / 2);
+        Vector2f playerRight(_PlayerPosition->left +
+            _PlayerPosition->width,
+            _PlayerPosition->top +
+            _PlayerPosition->height / 2);
 
-        Vector2f playerLeft(m_PlayerPosition->left,
-            m_PlayerPosition->top +
-            m_PlayerPosition->height / 2);
+        Vector2f playerLeft(_PlayerPosition->left,
+            _PlayerPosition->top +
+            _PlayerPosition->height / 2);
 
-        Vector2f playerHead(m_PlayerPosition->left +
-            m_PlayerPosition->width / 2,
-            m_PlayerPosition->top);
+        Vector2f playerHead(_PlayerPosition->left +
+            _PlayerPosition->width / 2,
+            _PlayerPosition->top);
 
-        if (m_Position.contains(playerFeet))
+        if (_Position.contains(playerFeet))
         {
-            if (playerFeet.y > m_Position.top)
+            if (playerFeet.y > _Position.top)
             {
-                m_PlayerPosition->top =
-                    m_Position.top -
-                    m_PlayerPosition->height;
+                _PlayerPosition->top =
+                    _Position.top -
+                    _PlayerPosition->height;
 
-                *m_PlayerIsGrounded = true;
+                *_PlayerIsGrounded = true;
             }
         }
 
-        else if (m_Position.contains(playerRight))
+        else if (_Position.contains(playerRight))
         {
-            m_PlayerPosition->left =
-                m_Position.left - m_PlayerPosition->width;
+            _PlayerPosition->left =
+                _Position.left - _PlayerPosition->width;
         }
 
-        else if (m_Position.contains(playerLeft))
+        else if (_Position.contains(playerLeft))
         {
-            m_PlayerPosition->left =
-                m_Position.left + m_Position.width;
+            _PlayerPosition->left =
+                _Position.left + _Position.width;
         }
 
-        else if (m_Position.contains(playerHead))
+        else if (_Position.contains(playerHead))
         {
-            m_PlayerPosition->top =
-                m_Position.top + m_Position.height;
+            _PlayerPosition->top =
+                _Position.top + _Position.height;
         }
     }
 }

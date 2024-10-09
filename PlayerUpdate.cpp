@@ -4,178 +4,178 @@
 
 FloatRect* PlayerUpdate::getPositionPointer()
 {
-    return &m_Position;
+	return &_Position;
 }
 
 bool* PlayerUpdate::getGroundedPointer()
 {
-    return &m_IsGrounded;
+	return &_IsGrounded;
 }
 
 InputReceiver* PlayerUpdate::getInputReceiver()
 {
-    return &m_InputReceiver;
+	return &_InputReceiver;
 
 }
 
 void PlayerUpdate::assemble(
-    shared_ptr<LevelUpdate> levelUpdate,
-    shared_ptr<PlayerUpdate> playerUpdate)
+	shared_ptr<LevelUpdate> levelUpdate,
+	shared_ptr<PlayerUpdate> playerUpdate)
 {
-    SoundEngine::SoundEngine();
+	SoundEngine::SoundEngine();
 
-    m_Position.width = PLAYER_WIDTH;
-    m_Position.height = PLAYER_HEIGHT;
-    m_IsPaused = levelUpdate->getIsPausedPointer();
+	_Position.width = PLAYER_WIDTH;
+	_Position.height = PLAYER_HEIGHT;
+	_IsPaused = levelUpdate->getIsPausedPointer();
 }
 
 void PlayerUpdate::handleInput()
 {
-    for (const Event& event : m_InputReceiver.getEvents())
-    {
-        if (event.type == Event::KeyPressed)
-        {
-            if (event.key.code == Keyboard::D)
-            {
-                m_RightIsHeldDown = true;
-            }
-            if (event.key.code == Keyboard::A)
-            {
-                m_LeftIsHeldDown = true;
-            }
+	for (const Event& event : _InputReceiver.getEvents())
+	{
+		if (event.type == Event::KeyPressed)
+		{
+			if (event.key.code == Keyboard::D)
+			{
+				_RightIsHeldDown = true;
+			}
+			if (event.key.code == Keyboard::A)
+			{
+				_LeftIsHeldDown = true;
+			}
 
-            if (event.key.code == Keyboard::W)
-            {
-                m_BoostIsHeldDown = true;
-            }
+			if (event.key.code == Keyboard::W)
+			{
+				_BoostIsHeldDown = true;
+			}
 
-            if (event.key.code == Keyboard::Space)
-            {
-                m_SpaceHeldDown = true;
-            }
-        }
+			if (event.key.code == Keyboard::Space)
+			{
+				_SpaceHeldDown = true;
+			}
+		}
 
-        if (event.type == Event::KeyReleased)
-        {
-            if (event.key.code == Keyboard::D)
-            {
-                m_RightIsHeldDown = false;
-            }
-            if (event.key.code == Keyboard::A)
-            {
-                m_LeftIsHeldDown = false;
-            }
+		if (event.type == Event::KeyReleased)
+		{
+			if (event.key.code == Keyboard::D)
+			{
+				_RightIsHeldDown = false;
+			}
+			if (event.key.code == Keyboard::A)
+			{
+				_LeftIsHeldDown = false;
+			}
 
-            if (event.key.code == Keyboard::W)
-            {
-                m_BoostIsHeldDown = false;
-            }
+			if (event.key.code == Keyboard::W)
+			{
+				_BoostIsHeldDown = false;
+			}
 
-            if (event.key.code == Keyboard::Space)
-            {
-                m_SpaceHeldDown = false;
-            }
+			if (event.key.code == Keyboard::Space)
+			{
+				_SpaceHeldDown = false;
+			}
 
-        }
-    }
+		}
+	}
 
-    m_InputReceiver.clearEvents();
+	_InputReceiver.clearEvents();
 }
 
 
 void PlayerUpdate::update(float timeTakenThisFrame)
 {
-    if (!*m_IsPaused)
-    {
-        // All the rest of the code is in here
-        m_Position.top += m_Gravity *
-            timeTakenThisFrame;
+	if (!*_IsPaused)
+	{
+		// All the rest of the code is in here
+		_Position.top += _Gravity *
+			timeTakenThisFrame;
 
-        handleInput();
+		handleInput();
 
-        if (m_IsGrounded)
-        {
-            if (m_RightIsHeldDown)
-            {
-                m_Position.left +=
-                    timeTakenThisFrame * m_RunSpeed;
-            }
+		if (_IsGrounded)
+		{
+			if (_RightIsHeldDown)
+			{
+				_Position.left +=
+					timeTakenThisFrame * _RunSpeed;
+			}
 
-            if (m_LeftIsHeldDown)
-            {
-                m_Position.left -=
-                    timeTakenThisFrame * m_RunSpeed;
-            }
-        }
+			if (_LeftIsHeldDown)
+			{
+				_Position.left -=
+					timeTakenThisFrame * _RunSpeed;
+			}
+		}
 
-        if (m_BoostIsHeldDown)
-        {
-            m_Position.top -=
-                timeTakenThisFrame * m_BoostSpeed;
+		if (_BoostIsHeldDown)
+		{
+			_Position.top -=
+				timeTakenThisFrame * _BoostSpeed;
 
-            if (m_RightIsHeldDown)
-            {
-                m_Position.left +=
-                    timeTakenThisFrame * m_RunSpeed / 2;
-            }
+			if (_RightIsHeldDown)
+			{
+				_Position.left +=
+					timeTakenThisFrame * _RunSpeed / 2;
+			}
 
-            if (m_LeftIsHeldDown)
-            {
-                m_Position.left -=
-                    timeTakenThisFrame * m_RunSpeed / 4;
-            }
-        }
+			if (_LeftIsHeldDown)
+			{
+				_Position.left -=
+					timeTakenThisFrame * _RunSpeed / 4;
+			}
+		}
 
-        // Handle Jumping
-        if (m_SpaceHeldDown && !m_InJump && m_IsGrounded)
-        {
-            SoundEngine::playJump();
-            m_InJump = true;
-            m_JumpClock.restart();
-        }
+		// Handle Jumping
+		if (_SpaceHeldDown && !_InJump && _IsGrounded)
+		{
+			SoundEngine::playJump();
+			_InJump = true;
+			_JumpClock.restart();
+		}
 
-        if (!m_SpaceHeldDown)
-        {
-            //mInJump = false;
-        }
+		if (!_SpaceHeldDown)
+		{
+			//mInJump = false;
+		}
 
-        if (m_InJump)
-        {
-            if (m_JumpClock.getElapsedTime().asSeconds() <
-                m_JumpDuration / 2)
-            {
-                // Going up
-                m_Position.top -= m_JumpSpeed *
-                    timeTakenThisFrame;
-            }
-            else
-            {
-                // Going down
-                m_Position.top +=
-                    m_JumpSpeed * timeTakenThisFrame;
-            }
+		if (_InJump)
+		{
+			if (_JumpClock.getElapsedTime().asSeconds() <
+				_JumpDuration / 2)
+			{
+				// Going up
+				_Position.top -= _JumpSpeed *
+					timeTakenThisFrame;
+			}
+			else
+			{
+				// Going down
+				_Position.top +=
+					_JumpSpeed * (timeTakenThisFrame / 4);
+			}
 
-            if (m_JumpClock.getElapsedTime().asSeconds() >
-                m_JumpDuration)
-            {
-                m_InJump = false;
-            }
+			if (_JumpClock.getElapsedTime().asSeconds() >
+				_JumpDuration)
+			{
+				_InJump = false;
+			}
 
-            if (m_RightIsHeldDown)
-            {
-                m_Position.left +=
-                    timeTakenThisFrame * m_RunSpeed;
-            }
+			if (_RightIsHeldDown)
+			{
+				_Position.left +=
+					timeTakenThisFrame * _RunSpeed;
+			}
 
-            if (m_LeftIsHeldDown)
-            {
-                m_Position.left -=
-                    timeTakenThisFrame * m_RunSpeed;
-            }
-        }// End if (m_InJump)
+			if (_LeftIsHeldDown)
+			{
+				_Position.left -=
+					timeTakenThisFrame * _RunSpeed;
+			}
+		}// End if (_InJump)
 
-        m_IsGrounded = false;
-    }
+		_IsGrounded = false;
+	}
 }
 
 

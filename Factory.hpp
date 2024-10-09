@@ -11,7 +11,7 @@ class InputDispatcher;
 class Factory
 {
 private:
-	RenderWindow* m_Window;
+	RenderWindow* _Window;
 
 	const int PLAYER_TEX_LEFT = 0;
 	const int PLAYER_TEX_TOP = 0;
@@ -68,5 +68,5 @@ public:
 		InputDispatcher& inputDispatcher);
 
 	//Make private soon
-	Texture* m_Texture;
+	Texture* _Texture;
 };

@@ -6,14 +6,14 @@ using namespace sf;
 class Animator
 {
 private:
-	IntRect m_SourceRect;
-	int m_LeftOffset;
-	int m_FrameCount;
-	int m_CurrentFrame;
-	int m_FramePeriod;
-	int m_FrameWidth;
-	int m_FPS = 12;
-	Clock m_Clock;
+	IntRect _SourceRect;
+	int _LeftOffset;
+	int _FrameCount;
+	int _CurrentFrame;
+	int _FramePeriod;
+	int _FrameWidth;
+	int _FPS = 12;
+	Clock _Clock;
 
 public:
 

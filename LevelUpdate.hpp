@@ -8,17 +8,17 @@ using namespace std;
 class LevelUpdate : public Update
 {
 private:
-	bool m_IsPaused = false;
-	vector <FloatRect*> m_PlatformPositions;
-	float* m_CameraTime = new float;
-	FloatRect* m_PlayerPosition;
-	float m_PlatformCreationInterval = 0;
-	float m_TimeSinceLastPlatform = 0;
-	int m_NextPlatformToMove = 0;
-	int m_NumberOfPlatforms = 0;
-	int m_MoveRelativeToPlatform = 0;
+	bool _IsPaused = true;
+	vector <FloatRect*> _PlatformPositions;
+	float* _CameraTime = new float;
+	FloatRect* _PlayerPosition;
+	float _PlatformCreationInterval = 0;
+	float _TimeSinceLastPlatform = 0;
+	int _NextPlatformToMove = 0;
+	int _NumberOfPlatforms = 0;
+	int _MoveRelativeToPlatform = 0;
 
-	bool m_GameOver = true;
+	bool _GameOver = true;
 
 	void positionLevelAtStart();
 

@@ -5,24 +5,24 @@ CameraGraphics::CameraGraphics(
     RenderWindow* window, Texture* texture,
     Vector2f viewSize, FloatRect viewport)
 {
-    m_Window = window;
-    m_Texture = texture;
+    _Window = window;
+    _Texture = texture;
 
-    m_View.setSize(viewSize);
-    m_View.setViewport(viewport);
+    _View.setSize(viewSize);
+    _View.setViewport(viewport);
 
     // The mini map viewport is less than 1
     if (viewport.width < 1)
     {
-        m_IsMiniMap = true;
+        _IsMiniMap = true;
     }
     else
     {
         // Only the full screen camera has the time text
-        m_Font.loadFromFile("fonts/KOMIKAP_.ttf");
-        m_Text.setFont(m_Font);
-        m_Text.setFillColor(Color(255, 0, 0, 255));
-        m_Text.setScale(0.2f, 0.2f);
+        _Font.loadFromFile("fonts/KOMIKAP_.ttf");
+        _Text.setFont(_Font);
+        _Text.setFillColor(Color(255, 0, 0, 255));
+        _Text.setScale(0.2f, 0.2f);
     }
 }
 
@@ -33,9 +33,9 @@ void CameraGraphics::assemble(
 {
     shared_ptr<CameraUpdate> cameraUpdate =
         static_pointer_cast<CameraUpdate>(genericUpdate);
-    m_Position = cameraUpdate->getPositionPointer();
+    _Position = cameraUpdate->getPositionPointer();
 
-    m_VertexStartIndex = canvas.getVertexCount();
+    _VertexStartIndex = canvas.getVertexCount();
     canvas.resize(canvas.getVertexCount() + 4);
 
     const int uPos = texCoords.left;
@@ -43,75 +43,75 @@ void CameraGraphics::assemble(
     const int texWidth = texCoords.width;
     const int texHeight = texCoords.height;
 
-    canvas[m_VertexStartIndex].texCoords.x = uPos;
-    canvas[m_VertexStartIndex].texCoords.y = vPos;
-    canvas[m_VertexStartIndex + 1].texCoords.x =
+    canvas[_VertexStartIndex].texCoords.x = uPos;
+    canvas[_VertexStartIndex].texCoords.y = vPos;
+    canvas[_VertexStartIndex + 1].texCoords.x =
         uPos + texWidth;
-    canvas[m_VertexStartIndex + 1].texCoords.y =
+    canvas[_VertexStartIndex + 1].texCoords.y =
         vPos;
-    canvas[m_VertexStartIndex + 2].texCoords.x =
+    canvas[_VertexStartIndex + 2].texCoords.x =
         uPos + texWidth;
-    canvas[m_VertexStartIndex + 2].texCoords.y =
+    canvas[_VertexStartIndex + 2].texCoords.y =
         vPos + texHeight;
-    canvas[m_VertexStartIndex + 3].texCoords.x =
+    canvas[_VertexStartIndex + 3].texCoords.x =
         uPos;
-    canvas[m_VertexStartIndex + 3].texCoords.y =
+    canvas[_VertexStartIndex + 3].texCoords.y =
         vPos + texHeight;
 }
 
 float* CameraGraphics::getTimeConnection()
 {
-    return &m_Time;
+    return &_Time;
 }
 
 void CameraGraphics::draw(VertexArray& canvas)
 {
-    m_View.setCenter(m_Position->getPosition());
+    _View.setCenter(_Position->getPosition());
 
     Vector2f startPosition;
-    startPosition.x = m_View.getCenter().x -
-        m_View.getSize().x / 2;
-    startPosition.y = m_View.getCenter().y -
-        m_View.getSize().y / 2;
+    startPosition.x = _View.getCenter().x -
+        _View.getSize().x / 2;
+    startPosition.y = _View.getCenter().y -
+        _View.getSize().y / 2;
 
     Vector2f scale;
-    scale.x = m_View.getSize().x;
-    scale.y = m_View.getSize().y;
+    scale.x = _View.getSize().x;
+    scale.y = _View.getSize().y;
 
-    canvas[m_VertexStartIndex].position = startPosition;
-    canvas[m_VertexStartIndex + 1].position =
+    canvas[_VertexStartIndex].position = startPosition;
+    canvas[_VertexStartIndex + 1].position =
         startPosition + Vector2f(scale.x, 0);
-    canvas[m_VertexStartIndex + 2].position =
+    canvas[_VertexStartIndex + 2].position =
         startPosition + scale;
-    canvas[m_VertexStartIndex + 3].position =
+    canvas[_VertexStartIndex + 3].position =
         startPosition + Vector2f(0, scale.y);
 
 
-    if (m_IsMiniMap)
+    if (_IsMiniMap)
     {
-        if (m_View.getSize().x <
-            MAX_WIDTH && m_Position->width > 1)
+        if (_View.getSize().x <
+            MAX_WIDTH && _Position->width > 1)
         {
-            m_View.zoom(m_Position->width);
+            _View.zoom(_Position->width);
         }
-        else if (m_View.getSize().x >
-            MIN_WIDTH && m_Position->width < 1)
+        else if (_View.getSize().x >
+            MIN_WIDTH && _Position->width < 1)
         {
-            m_View.zoom(m_Position->width);
+            _View.zoom(_Position->width);
         }
     }
 
-    m_Window->setView(m_View);
+    _Window->setView(_View);
 
     // Draw the time UI but only in the main camera
-    if (!m_IsMiniMap)
+    if (!_IsMiniMap)
     {
-        m_Text.setString(std::to_string(m_Time));
-        m_Text.setPosition(
-            m_Window->mapPixelToCoords(Vector2i(5, 5)));
-        m_Window->draw(m_Text);
+        _Text.setString(std::to_string(_Time));
+        _Text.setPosition(
+            _Window->mapPixelToCoords(Vector2i(5, 5)));
+        _Window->draw(_Text);
     }
 
     // Draw the main canvas
-    m_Window->draw(canvas, m_Texture);
+    _Window->draw(canvas, _Texture);
 }

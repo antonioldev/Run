@@ -2,15 +2,15 @@
 
 void InputReceiver::addEvent(Event event)
 {
-    mEvents.push_back(event);
+    _Events.push_back(event);
 }
 
 vector<Event>& InputReceiver::getEvents()
 {
-    return mEvents;
+    return _Events;
 }
 
 void InputReceiver::clearEvents()
 {
-    mEvents.clear();
+    _Events.clear();
 }

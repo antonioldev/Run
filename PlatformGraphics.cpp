@@ -3,15 +3,15 @@
 
 void PlatformGraphics::draw(VertexArray& canvas)
 {
-    const Vector2f& position = m_Position->getPosition();
-    const Vector2f& scale = m_Position->getSize();
+    const Vector2f& position = _Position->getPosition();
+    const Vector2f& scale = _Position->getSize();
 
-    canvas[m_VertexStartIndex].position = position;
-    canvas[m_VertexStartIndex + 1].position =
+    canvas[_VertexStartIndex].position = position;
+    canvas[_VertexStartIndex + 1].position =
         position + Vector2f(scale.x, 0);
-    canvas[m_VertexStartIndex + 2].position =
+    canvas[_VertexStartIndex + 2].position =
         position + scale;
-    canvas[m_VertexStartIndex + 3].position =
+    canvas[_VertexStartIndex + 3].position =
         position + Vector2f(0, scale.y);
 }
 
@@ -22,9 +22,9 @@ void PlatformGraphics::assemble(VertexArray& canvas,
     shared_ptr<PlatformUpdate> platformUpdate =
         static_pointer_cast<PlatformUpdate>(genericUpdate);
 
-    m_Position = platformUpdate->getPositionPointer();
+    _Position = platformUpdate->getPositionPointer();
 
-    m_VertexStartIndex = canvas.getVertexCount();
+    _VertexStartIndex = canvas.getVertexCount();
     canvas.resize(canvas.getVertexCount() + 4);
 
     const int uPos = texCoords.left;
@@ -32,19 +32,19 @@ void PlatformGraphics::assemble(VertexArray& canvas,
     const int texWidth = texCoords.width;
     const int texHeight = texCoords.height;
 
-    canvas[m_VertexStartIndex].texCoords.x = uPos;
-    canvas[m_VertexStartIndex].texCoords.y = vPos;
-    canvas[m_VertexStartIndex + 1].texCoords.x =
+    canvas[_VertexStartIndex].texCoords.x = uPos;
+    canvas[_VertexStartIndex].texCoords.y = vPos;
+    canvas[_VertexStartIndex + 1].texCoords.x =
         uPos + texWidth;
-    canvas[m_VertexStartIndex + 1].texCoords.y =
+    canvas[_VertexStartIndex + 1].texCoords.y =
         vPos;
-    canvas[m_VertexStartIndex + 2].texCoords.x =
+    canvas[_VertexStartIndex + 2].texCoords.x =
         uPos + texWidth;
-    canvas[m_VertexStartIndex + 2].texCoords.y =
+    canvas[_VertexStartIndex + 2].texCoords.y =
         vPos + texHeight;
-    canvas[m_VertexStartIndex + 3].texCoords.x =
+    canvas[_VertexStartIndex + 3].texCoords.x =
         uPos;
-    canvas[m_VertexStartIndex + 3].texCoords.y =
+    canvas[_VertexStartIndex + 3].texCoords.y =
         vPos + texHeight;
 
 }

@@ -7,8 +7,8 @@ using namespace sf;
 class PlatformGraphics : public Graphics
 {
 private:
-	FloatRect* m_Position = nullptr;
-	int m_VertexStartIndex = -1;
+	FloatRect* _Position = nullptr;
+	int _VertexStartIndex = -1;
 
 public:
 

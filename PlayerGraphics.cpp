@@ -7,10 +7,10 @@ void PlayerGraphics::assemble(VertexArray& canvas,
     IntRect texCoords)
 {
 
-    m_PlayerUpdate = static_pointer_cast<PlayerUpdate>(genericUpdate);
-    m_Position = m_PlayerUpdate->getPositionPointer();
+    _PlayerUpdate = static_pointer_cast<PlayerUpdate>(genericUpdate);
+    _Position = _PlayerUpdate->getPositionPointer();
 
-    m_Animator = new Animator(
+    _Animator = new Animator(
         texCoords.left,
         texCoords.top,
         6,// 6 frames
@@ -19,10 +19,10 @@ void PlayerGraphics::assemble(VertexArray& canvas,
         12);// FPS
 
     // Get the first frame of animation
-    m_SectionToDraw = m_Animator->getCurrentFrame(false);
-    m_StandingStillSectionToDraw = m_Animator->getCurrentFrame(false);
+    _SectionToDraw = _Animator->getCurrentFrame(false);
+    _StandingStillSectionToDraw = _Animator->getCurrentFrame(false);
 
-    m_VertexStartIndex = canvas.getVertexCount();
+    _VertexStartIndex = canvas.getVertexCount();
     canvas.resize(canvas.getVertexCount() + 4);
 }
 
@@ -30,187 +30,187 @@ void PlayerGraphics::assemble(VertexArray& canvas,
 void PlayerGraphics::draw(VertexArray& canvas)
 {
     const Vector2f& position =
-        m_Position->getPosition();
+        _Position->getPosition();
     const Vector2f& scale =
-        m_Position->getSize();
+        _Position->getSize();
 
-    canvas[m_VertexStartIndex].position =
+    canvas[_VertexStartIndex].position =
         position;
-    canvas[m_VertexStartIndex + 1].position =
+    canvas[_VertexStartIndex + 1].position =
         position + Vector2f(scale.x, 0);
-    canvas[m_VertexStartIndex + 2].position =
+    canvas[_VertexStartIndex + 2].position =
         position + scale;
-    canvas[m_VertexStartIndex + 3].position =
+    canvas[_VertexStartIndex + 3].position =
         position + Vector2f(0, scale.y);
 
 
-    if (m_PlayerUpdate->m_RightIsHeldDown &&
-        !m_PlayerUpdate->m_InJump &&
-        !m_PlayerUpdate->m_BoostIsHeldDown &&
-        m_PlayerUpdate->m_IsGrounded)
+    if (_PlayerUpdate->_RightIsHeldDown &&
+        !_PlayerUpdate->_InJump &&
+        !_PlayerUpdate->_BoostIsHeldDown &&
+        _PlayerUpdate->_IsGrounded)
     {
-        m_SectionToDraw = m_Animator->getCurrentFrame(false);
+        _SectionToDraw = _Animator->getCurrentFrame(false);
     }
 
-    if (m_PlayerUpdate->m_LeftIsHeldDown &&
-        !m_PlayerUpdate->m_InJump &&
-        !m_PlayerUpdate->m_BoostIsHeldDown &&
-        m_PlayerUpdate->m_IsGrounded)
+    if (_PlayerUpdate->_LeftIsHeldDown &&
+        !_PlayerUpdate->_InJump &&
+        !_PlayerUpdate->_BoostIsHeldDown &&
+        _PlayerUpdate->_IsGrounded)
     {
-        m_SectionToDraw = m_Animator->getCurrentFrame(true);// reversed
+        _SectionToDraw = _Animator->getCurrentFrame(true);// reversed
     }
     else
     {
         // Test the players facing position
         // in case it changed while jumping or boosting
         // This value is used in the final animation option
-        if (m_PlayerUpdate->m_LeftIsHeldDown)
+        if (_PlayerUpdate->_LeftIsHeldDown)
         {
-            m_LastFacingRight = false;
+            _LastFacingRight = false;
         }
         else
         {
-            m_LastFacingRight = true;
+            _LastFacingRight = true;
         }
     }
 
-    const int uPos = m_SectionToDraw->left;
-    const int vPos = m_SectionToDraw->top;
-    const int texWidth = m_SectionToDraw->width;
-    const int texHeight = m_SectionToDraw->height;
+    const int uPos = _SectionToDraw->left;
+    const int vPos = _SectionToDraw->top;
+    const int texWidth = _SectionToDraw->width;
+    const int texHeight = _SectionToDraw->height;
 
-    if (m_PlayerUpdate->m_RightIsHeldDown &&
-        !m_PlayerUpdate->m_InJump &&
-        !m_PlayerUpdate->m_BoostIsHeldDown)
+    if (_PlayerUpdate->_RightIsHeldDown &&
+        !_PlayerUpdate->_InJump &&
+        !_PlayerUpdate->_BoostIsHeldDown)
     {
-        canvas[m_VertexStartIndex].texCoords.x
+        canvas[_VertexStartIndex].texCoords.x
             = uPos;
-        canvas[m_VertexStartIndex].texCoords.y
+        canvas[_VertexStartIndex].texCoords.y
             = vPos;
-        canvas[m_VertexStartIndex + 1].texCoords.x
+        canvas[_VertexStartIndex + 1].texCoords.x
             = uPos + texWidth;
-        canvas[m_VertexStartIndex + 1].texCoords.y
+        canvas[_VertexStartIndex + 1].texCoords.y
             = vPos;
-        canvas[m_VertexStartIndex + 2].texCoords.x
+        canvas[_VertexStartIndex + 2].texCoords.x
             = uPos + texWidth;
-        canvas[m_VertexStartIndex + 2].texCoords.y
+        canvas[_VertexStartIndex + 2].texCoords.y
             = vPos + texHeight;
-        canvas[m_VertexStartIndex + 3].texCoords.x
+        canvas[_VertexStartIndex + 3].texCoords.x
             = uPos;
-        canvas[m_VertexStartIndex + 3].texCoords.y
+        canvas[_VertexStartIndex + 3].texCoords.y
             = vPos + texHeight;
     }
 
-    else if (m_PlayerUpdate->m_LeftIsHeldDown &&
-        !m_PlayerUpdate->m_InJump &&
-        !m_PlayerUpdate->m_BoostIsHeldDown)
+    else if (_PlayerUpdate->_LeftIsHeldDown &&
+        !_PlayerUpdate->_InJump &&
+        !_PlayerUpdate->_BoostIsHeldDown)
     {
-        canvas[m_VertexStartIndex].texCoords.x
+        canvas[_VertexStartIndex].texCoords.x
             = uPos;
-        canvas[m_VertexStartIndex].texCoords.y
+        canvas[_VertexStartIndex].texCoords.y
             = vPos;
-        canvas[m_VertexStartIndex + 1].texCoords.x
+        canvas[_VertexStartIndex + 1].texCoords.x
             = uPos - texWidth;
-        canvas[m_VertexStartIndex + 1].texCoords.y
+        canvas[_VertexStartIndex + 1].texCoords.y
             = vPos;
-        canvas[m_VertexStartIndex + 2].texCoords.x
+        canvas[_VertexStartIndex + 2].texCoords.x
             = uPos - texWidth;
-        canvas[m_VertexStartIndex + 2].texCoords.y
+        canvas[_VertexStartIndex + 2].texCoords.y
             = vPos + texHeight;
-        canvas[m_VertexStartIndex + 3].texCoords.x
+        canvas[_VertexStartIndex + 3].texCoords.x
             = uPos;
-        canvas[m_VertexStartIndex + 3].texCoords.y
+        canvas[_VertexStartIndex + 3].texCoords.y
             = vPos + texHeight;
     }
 
 
-    else if (m_PlayerUpdate->m_RightIsHeldDown &&
-        m_PlayerUpdate->m_BoostIsHeldDown)
+    else if (_PlayerUpdate->_RightIsHeldDown &&
+        _PlayerUpdate->_BoostIsHeldDown)
     {
-        canvas[m_VertexStartIndex].texCoords.x =
+        canvas[_VertexStartIndex].texCoords.x =
             BOOST_TEX_LEFT;
-        canvas[m_VertexStartIndex].texCoords.y =
+        canvas[_VertexStartIndex].texCoords.y =
             BOOST_TEX_TOP;
-        canvas[m_VertexStartIndex + 1].texCoords.x =
+        canvas[_VertexStartIndex + 1].texCoords.x =
             BOOST_TEX_LEFT + BOOST_TEX_WIDTH;
-        canvas[m_VertexStartIndex + 1].texCoords.y =
+        canvas[_VertexStartIndex + 1].texCoords.y =
             BOOST_TEX_TOP;
-        canvas[m_VertexStartIndex + 2].texCoords.x =
+        canvas[_VertexStartIndex + 2].texCoords.x =
             BOOST_TEX_LEFT + BOOST_TEX_WIDTH;
-        canvas[m_VertexStartIndex + 2].texCoords.y =
+        canvas[_VertexStartIndex + 2].texCoords.y =
             BOOST_TEX_TOP + BOOST_TEX_HEIGHT;
-        canvas[m_VertexStartIndex + 3].texCoords.x =
+        canvas[_VertexStartIndex + 3].texCoords.x =
             BOOST_TEX_LEFT;
-        canvas[m_VertexStartIndex + 3].texCoords.y =
+        canvas[_VertexStartIndex + 3].texCoords.y =
             BOOST_TEX_TOP + BOOST_TEX_HEIGHT;
     }
-    else if (m_PlayerUpdate->m_LeftIsHeldDown &&
-        m_PlayerUpdate->m_BoostIsHeldDown)
+    else if (_PlayerUpdate->_LeftIsHeldDown &&
+        _PlayerUpdate->_BoostIsHeldDown)
     {
-        canvas[m_VertexStartIndex].texCoords.x =
+        canvas[_VertexStartIndex].texCoords.x =
             BOOST_TEX_LEFT + BOOST_TEX_WIDTH;
-        canvas[m_VertexStartIndex].texCoords.y = 0;
-        canvas[m_VertexStartIndex + 1].texCoords.x =
+        canvas[_VertexStartIndex].texCoords.y = 0;
+        canvas[_VertexStartIndex + 1].texCoords.x =
             BOOST_TEX_LEFT;
-        canvas[m_VertexStartIndex + 1].texCoords.y = 0;
-        canvas[m_VertexStartIndex + 2].texCoords.x =
+        canvas[_VertexStartIndex + 1].texCoords.y = 0;
+        canvas[_VertexStartIndex + 2].texCoords.x =
             BOOST_TEX_LEFT;
-        canvas[m_VertexStartIndex + 2].texCoords.y = 100;
-        canvas[m_VertexStartIndex + 3].texCoords.x =
+        canvas[_VertexStartIndex + 2].texCoords.y = 100;
+        canvas[_VertexStartIndex + 3].texCoords.x =
             BOOST_TEX_LEFT + BOOST_TEX_WIDTH;
-        canvas[m_VertexStartIndex + 3].texCoords.y = 100;
+        canvas[_VertexStartIndex + 3].texCoords.y = 100;
     }
 
-    else if (m_PlayerUpdate->m_BoostIsHeldDown)
+    else if (_PlayerUpdate->_BoostIsHeldDown)
     {
-        canvas[m_VertexStartIndex].texCoords.x = 536;
-        canvas[m_VertexStartIndex].texCoords.y = 0;
-        canvas[m_VertexStartIndex + 1].texCoords.x = 605;
-        canvas[m_VertexStartIndex + 1].texCoords.y = 0;
-        canvas[m_VertexStartIndex + 2].texCoords.x = 605;
-        canvas[m_VertexStartIndex + 2].texCoords.y = 100;
-        canvas[m_VertexStartIndex + 3].texCoords.x = 536;
-        canvas[m_VertexStartIndex + 3].texCoords.y = 100;
+        canvas[_VertexStartIndex].texCoords.x = 536;
+        canvas[_VertexStartIndex].texCoords.y = 0;
+        canvas[_VertexStartIndex + 1].texCoords.x = 605;
+        canvas[_VertexStartIndex + 1].texCoords.y = 0;
+        canvas[_VertexStartIndex + 2].texCoords.x = 605;
+        canvas[_VertexStartIndex + 2].texCoords.y = 100;
+        canvas[_VertexStartIndex + 3].texCoords.x = 536;
+        canvas[_VertexStartIndex + 3].texCoords.y = 100;
     }
     else
     {
-        if (m_LastFacingRight)
+        if (_LastFacingRight)
         {
-            canvas[m_VertexStartIndex].texCoords.x =
-                m_StandingStillSectionToDraw->left;
-            canvas[m_VertexStartIndex].texCoords.y =
-                m_StandingStillSectionToDraw->top;
-            canvas[m_VertexStartIndex + 1].texCoords.x =
-                m_StandingStillSectionToDraw->left + texWidth;
-            canvas[m_VertexStartIndex + 1].texCoords.y =
-                m_StandingStillSectionToDraw->top;
-            canvas[m_VertexStartIndex + 2].texCoords.x =
-                m_StandingStillSectionToDraw->left + texWidth;
-            canvas[m_VertexStartIndex + 2].texCoords.y =
-                m_StandingStillSectionToDraw->top + texHeight;
-            canvas[m_VertexStartIndex + 3].texCoords.x =
-                m_StandingStillSectionToDraw->left;
-            canvas[m_VertexStartIndex + 3].texCoords.y =
-                m_StandingStillSectionToDraw->top + texHeight;
+            canvas[_VertexStartIndex].texCoords.x =
+                _StandingStillSectionToDraw->left;
+            canvas[_VertexStartIndex].texCoords.y =
+                _StandingStillSectionToDraw->top;
+            canvas[_VertexStartIndex + 1].texCoords.x =
+                _StandingStillSectionToDraw->left + texWidth;
+            canvas[_VertexStartIndex + 1].texCoords.y =
+                _StandingStillSectionToDraw->top;
+            canvas[_VertexStartIndex + 2].texCoords.x =
+                _StandingStillSectionToDraw->left + texWidth;
+            canvas[_VertexStartIndex + 2].texCoords.y =
+                _StandingStillSectionToDraw->top + texHeight;
+            canvas[_VertexStartIndex + 3].texCoords.x =
+                _StandingStillSectionToDraw->left;
+            canvas[_VertexStartIndex + 3].texCoords.y =
+                _StandingStillSectionToDraw->top + texHeight;
         }
         else
         {
-            canvas[m_VertexStartIndex].texCoords.x =
-                m_StandingStillSectionToDraw->left + texWidth;
-            canvas[m_VertexStartIndex].texCoords.y =
-                m_StandingStillSectionToDraw->top;
-            canvas[m_VertexStartIndex + 1].texCoords.x =
-                m_StandingStillSectionToDraw->left;
-            canvas[m_VertexStartIndex + 1].texCoords.y =
-                m_StandingStillSectionToDraw->top;
-            canvas[m_VertexStartIndex + 2].texCoords.x =
-                m_StandingStillSectionToDraw->left;
-            canvas[m_VertexStartIndex + 2].texCoords.y =
-                m_StandingStillSectionToDraw->top + texHeight;
-            canvas[m_VertexStartIndex + 3].texCoords.x =
-                m_StandingStillSectionToDraw->left + texWidth;
-            canvas[m_VertexStartIndex + 3].texCoords.y =
-                m_StandingStillSectionToDraw->top + texHeight;
+            canvas[_VertexStartIndex].texCoords.x =
+                _StandingStillSectionToDraw->left + texWidth;
+            canvas[_VertexStartIndex].texCoords.y =
+                _StandingStillSectionToDraw->top;
+            canvas[_VertexStartIndex + 1].texCoords.x =
+                _StandingStillSectionToDraw->left;
+            canvas[_VertexStartIndex + 1].texCoords.y =
+                _StandingStillSectionToDraw->top;
+            canvas[_VertexStartIndex + 2].texCoords.x =
+                _StandingStillSectionToDraw->left;
+            canvas[_VertexStartIndex + 2].texCoords.y =
+                _StandingStillSectionToDraw->top + texHeight;
+            canvas[_VertexStartIndex + 3].texCoords.x =
+                _StandingStillSectionToDraw->left + texWidth;
+            canvas[_VertexStartIndex + 3].texCoords.y =
+                _StandingStillSectionToDraw->top + texHeight;
         }
     }
 }

@@ -6,14 +6,14 @@ class LevelUpdate;
 class PlayerUpdate;
 
 class Update :
-    public Component
+	public Component
 {
 private:
 public:
-    Update();
-    virtual void assemble(
-        shared_ptr<LevelUpdate> levelUpdate,
-        shared_ptr<PlayerUpdate> playerUpdate) = 0;
+	Update();
+	virtual void assemble(
+		shared_ptr<LevelUpdate> levelUpdate,
+		shared_ptr<PlayerUpdate> playerUpdate) = 0;
 
-    virtual void update(float timeSinceLastUpdate) = 0;
+	virtual void update(float timeSinceLastUpdate) = 0;
 };

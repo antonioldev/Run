@@ -9,7 +9,7 @@ using namespace std;
 class GameObject
 {
 private:
-	vector <shared_ptr<Component>>  m_Components;
+	vector <shared_ptr<Component>>  _Components;
 
 public:
 	void addComponent(shared_ptr<Component> newComponent);

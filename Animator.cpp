@@ -7,31 +7,27 @@ Animator::Animator(
 	int textureHeight,
 	int fps)
 {
-	m_LeftOffset = leftOffset;
+	_LeftOffset = leftOffset;
 
-	m_CurrentFrame = 0;
-	m_FrameCount = frameCount;
+	_CurrentFrame = 0;
+	_FrameCount = frameCount;
 
-	if (m_FrameCount == 0)
-	{
-		m_FrameCount = 1;
-	}
+	if (_FrameCount == 0)
+		_FrameCount = 1;
 
-	m_FrameWidth = (float)textureWidth
-		/ m_FrameCount;
-	m_SourceRect.left = leftOffset;
-	m_SourceRect.top = topOffset;
-	m_SourceRect.width = m_FrameWidth;
-	m_SourceRect.height = textureHeight;
-	m_FPS = fps;
+	_FrameWidth = (float)textureWidth
+		/ _FrameCount;
+	_SourceRect.left = leftOffset;
+	_SourceRect.top = topOffset;
+	_SourceRect.width = _FrameWidth;
+	_SourceRect.height = textureHeight;
+	_FPS = fps;
 
-	if (m_FPS == 0)
-	{
-		m_FPS = 1;
-	}
+	if (_FPS == 0)
+		_FPS = 1;
 
-	m_FramePeriod = 1000 / m_FPS;
-	m_Clock.restart();
+	_FramePeriod = 1000 / _FPS;
+	_Clock.restart();
 }
 
 
@@ -43,20 +39,17 @@ IntRect* Animator::getCurrentFrame(bool reversed)
 	// (flipped horizontally) textures 
 	// are drawn pixels right to left
 
-	if (m_Clock.getElapsedTime().asMilliseconds()
-		> m_FramePeriod)
+	if (_Clock.getElapsedTime().asMilliseconds()
+		> _FramePeriod)
 	{
-		m_CurrentFrame++;
-		if (m_CurrentFrame >= m_FrameCount + reversed)
-		{
-			m_CurrentFrame = 0 + reversed;
-		}
-
-		m_Clock.restart();
+		_CurrentFrame++;
+		if (_CurrentFrame >= _FrameCount + reversed)
+			_CurrentFrame = 0 + reversed;
+		_Clock.restart();
 	}
 
-	m_SourceRect.left = m_LeftOffset + m_CurrentFrame
-		* m_FrameWidth;
+	_SourceRect.left = _LeftOffset + _CurrentFrame
+		* _FrameWidth;
 
-	return &m_SourceRect;
+	return &_SourceRect;
 }

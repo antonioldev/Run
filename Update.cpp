@@ -2,5 +2,5 @@
 
 Update::Update()
 {
-	m_IsUpdate = true;
+	_IsUpdate = true;
 }
